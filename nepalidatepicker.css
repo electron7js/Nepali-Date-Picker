@@ -1,0 +1,192 @@
+.nepali-date-picker-container {
+  display: none;
+  position: absolute;
+  width: max-content;
+  border: 1px solid #d1d5db;
+  padding: 12px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  z-index: 100;
+  min-width: 200px;
+  box-sizing: content-box;
+}
+
+.nepali-date-picker-container * {
+
+  box-sizing: content-box;
+}
+
+.nepali-date-picker-container .top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.nepali-date-picker-container .close-button {
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+.nepali-date-picker-container .close-button:hover {
+  background-color: #dc2626;
+}
+
+.nepali-date-picker-container .day-div {
+  border: 1px solid #e5e7eb;
+  padding: 8px;
+  cursor: pointer;
+  text-align: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  transition: background-color 0.2s, transform 0.1s;
+}
+.nepali-date-picker-container .day-div:hover {
+  /* background-color: #f3f4f6; */
+  transform: scale(1.05);
+}
+
+.nepali-date-picker-container .weekday-div {
+  background-color: #9ca3af;
+  border: 1px solid #d1d5db;
+  padding: 8px;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  width: 32px;
+  height: 32px;
+  font-size: 13px;
+  border-radius: 4px;
+}
+
+.nepali-date-picker-container .disabled-day-div {
+  border: 1px solid #e5e7eb;
+  padding: 8px;
+  text-align: center;
+  width: 32px;
+  height: 32px;
+  cursor: not-allowed;
+  background-color: #f3f4f6;
+  color: #9ca3af;
+  border-radius: 4px;
+}
+
+.nepali-date-picker-container .currentDate {
+  background-color: #10b981;
+  color: white;
+  border-radius: 4px;
+}
+
+.nepali-date-picker-container .selectedDate {
+  background-color: #3b82f6; 
+  color: white;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.nepali-date-picker-container select {
+font-size: large;
+border: 0;
+overflow: visible;
+z-index: 100;
+padding: 10px;
+}
+
+.nepali-date-picker-container .nav-button {
+  background-color: #e5e7eb; /* Light gray */
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+  color: #374151; /* Dark gray text */
+}
+
+.nepali-date-picker-container .nav-button:hover {
+  background-color: #d1d5db;
+  transform: scale(1.05);
+}
+
+.nepali-date-picker-container .nav-button:active {
+  transform: scale(0.95);
+  background-color: #9ca3af;
+  color: white;
+}
+
+/* .nepali-date-picker-container {
+  display: none;
+  position: absolute;
+  width: min-content;
+  border: 1px solid black;
+  padding: 8px;
+  background-color: rgb(241, 241, 241);
+  border-radius: 6px;
+}
+
+.nepali-date-picker-container .currentDate {
+  background-color: green;
+  color: white;
+}
+
+.nepali-date-picker-container .top-bar {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  padding: 4px;
+  margin: 4px;
+}
+.nepali-date-picker-container .selectedDate {
+  background-color: blue;
+  color: white;
+}
+
+.nepali-date-picker-container .close-button {
+  background-color: red;
+  color: white;
+  border: 0;
+  position: absolute;
+  top: 5%;
+  right: 5%;
+  cursor: pointer;
+}
+
+.nepali-date-picker-container .day-div {
+  border: 1px solid #ccc;
+  padding: 4px;
+  cursor: pointer;
+  text-align: center;
+  width: 20px;
+}
+
+.nepali-date-picker-container .weekday-div {
+  background-color: #ccc;
+  border: 1px solid #ccc;
+  padding: 4px;
+  text-align: left;
+  color: white;
+  width: 20px;
+  font-size: 12px;
+}
+
+.nepali-date-picker-container .disabled-day-div {
+  border: 1px solid #ccc;
+  padding: 4px;
+  text-align: center;
+  width: 20px;
+  cursor: initial;
+  background-color: #ccc;
+} */
