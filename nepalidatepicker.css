@@ -7,14 +7,13 @@
   background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   z-index: 100;
   min-width: 200px;
   box-sizing: content-box;
 }
 
 .nepali-date-picker-container * {
-
   box-sizing: content-box;
 }
 
@@ -90,18 +89,18 @@
 }
 
 .nepali-date-picker-container .selectedDate {
-  background-color: #3b82f6; 
+  background-color: #3b82f6;
   color: white;
   border-radius: 4px;
   font-weight: bold;
 }
 
 .nepali-date-picker-container select {
-font-size: large;
-border: 0;
-overflow: visible;
-z-index: 100;
-padding: 10px;
+  font-size: large;
+  border: 0;
+  overflow: visible;
+  z-index: 100;
+  padding: 10px;
 }
 
 .nepali-date-picker-container .nav-button {
