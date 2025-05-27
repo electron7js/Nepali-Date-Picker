@@ -450,7 +450,7 @@ function buildNepaliCalendars(options = {}) {
 
     backButton.innerHTML = "<";
     forwardButton.innerHTML = ">";
-    closeButton.innerHTML = "X";
+    closeButton.innerHTML = "x";
     backButton.classList.add("nav-button");
     forwardButton.classList.add("nav-button");
     closeButton.classList.add("close-button");
