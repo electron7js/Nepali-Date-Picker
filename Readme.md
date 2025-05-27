@@ -12,7 +12,7 @@ A lightweight, customizable Nepali date picker component implemented in vanilla 
 
 ## Demo
 
-![Screenshot](https://github.com/user-attachments/assets/37378ae1-9286-4f53-9f4c-9062198b9c1e)
+![Screenshot](https://github.com/user-attachments/assets/3454a0b4-04a5-4779-92a2-4011af293e69)
 
 ## Getting Started
 
