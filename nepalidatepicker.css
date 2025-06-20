@@ -25,6 +25,10 @@
   gap: 8px;
   margin-bottom: 8px;
 }
+.nepali-date-picker-container .top-bar select{
+  color: #000;
+  background-color: white;
+}
 
 .nepali-date-picker-container .close-button {
   background-color: #ef4444;
@@ -49,6 +53,7 @@
 }
 
 .nepali-date-picker-container .day-div {
+  color: #000;
   border: 1px solid #e5e7eb;
   /* padding: 8px; */
   /* padding-top: 3px; */
