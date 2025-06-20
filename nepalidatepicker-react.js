@@ -283,7 +283,7 @@ export function daysInMonth(year, month) {
 }
 
 
-function buildNepaliCalendars(options = {}) {
+export function buildNepaliCalendars(options = {}) {
 
   const {
     nepaliDatePickerClassName = "nepaliDatePicker",
@@ -746,4 +746,3 @@ function buildNepaliCalendars(options = {}) {
   });
 }
 
-export default buildNepaliCalendars;
