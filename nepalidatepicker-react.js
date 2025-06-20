@@ -1,5 +1,5 @@
 export const ndc = {
-  ENGLISH_START_DATE: new Date(1918, 3, 13),
+  ENGLISH_START_DATE: new Date(1913, 3, 13),
   nepaliYearMonths: {
     1970: [31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30],
     1971: [30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31],
@@ -141,14 +141,14 @@ export const ndc = {
     const englishDate = new Date(`${year}-${month}-${day} 5:45`);
     //   const englishDate = new Date(dateInput);
     if (englishDate < ndc.ENGLISH_START_DATE) {
-      throw new Error("Only dates after 1918-04-14 are supported");
+      throw new Error("Only dates after 1913-04-14 are supported");
     }
 
     const totalDays = Math.floor(
       (englishDate - ndc.ENGLISH_START_DATE) / (1000 * 60 * 60 * 24)
     );
     let remainingDays = totalDays;
-    let bsYear = 1975;
+    let bsYear = 1970;
     let bsMonth = 1;
     let bsDay = 1;
 
@@ -213,24 +213,24 @@ export const ndc = {
   },
 
   getEnglishDate(year, month, day) {
-    if (year < 1975 || year > 2099) {
+    if (year < 1970 || year > 2099) {
       throw new Error(
-        "Only dates after 1975-01-01 and upto 2099-12-30 are supported"
+        "Only dates after 1970-01-01 and upto 2099-12-30 are supported"
       );
     }
     if (month < 0 || month > ndc.nepaliYearMonths[year][month]) {
       throw new Error("Invalid number of months in the year");
     }
 
-    const totalDays = this.getDaysBetween(1975, 1, 1, year, month, day);
-    const totalMilliseconds = totalDays * 86400000 - 1632182400000;
+    const totalDays = this.getDaysBetween(1970, 1, 1, year, month, day);
+    const totalMilliseconds = totalDays * 86400000 -1789948800000;
     return new Date(totalMilliseconds);
   },
 
   getFiscalYear(year, month, day) {
-    if (year < 1975 || year > 2099) {
+    if (year < 1970 || year > 2099) {
       throw new Error(
-        "Only dates after 1975-01-01 and upto 2099-12-30 are supported"
+        "Only dates after 1970-01-01 and upto 2099-12-30 are supported"
       );
     }
 
