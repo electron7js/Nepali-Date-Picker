@@ -282,9 +282,7 @@ export function daysInMonth(year, month) {
   return ndc.nepaliYearMonths[year][month];
 }
 
-
-export function buildNepaliCalendars(options = {}) {
-
+function buildNepaliCalendars(options = {}) {
   const {
     nepaliDatePickerClassName = "nepaliDatePicker",
     rangeSelection = false,
@@ -293,22 +291,25 @@ export function buildNepaliCalendars(options = {}) {
     closeOnSelect = true,
     disableEarlierDates = false,
     disableLaterDates = false,
+    disableTodaysDate = false,
     changeFunction = () => {},
-    invalidDateFunction = () => {}
+    selectedDate = null,
+    invalidDateFunction = () => {},
+    closeOnLoseFocus = false
   } = options;
 
   const today = new Date();
-  today.setHours(0,0,0);
+  today.setHours(0, 0, 0);
   var englishYear = today.getFullYear();
   var englishMonthIndex = today.getMonth();
   var englishDayIndex = today.getDate();
   var todayNepali = ndc.getNepaliDate(
     englishYear,
-    englishMonthIndex+1,
+    englishMonthIndex + 1,
     englishDayIndex
   );
   var curNepyear = parseInt(todayNepali.split("-")[0]);
-  var curNepmonth = parseInt(todayNepali.split("-")[1])-1;
+  var curNepmonth = parseInt(todayNepali.split("-")[1]) - 1;
   var curNepday = parseInt(todayNepali.split("-")[2]);
   const maxNepYear = ndc.getMaxNepaliYear();
   const minNepYear = ndc.getMinNepaliYear();
@@ -332,6 +333,14 @@ export function buildNepaliCalendars(options = {}) {
     containerDiv.classList.add("nepali-date-picker-container");
     document.body.appendChild(containerDiv);
     containers.push(containerDiv);
+
+    if (closeOnLoseFocus) {
+      document.addEventListener("click", function (event) {
+        if (!containerDiv.contains(event.target) && event.target !== inp) {
+          containerDiv.style.display = "none";
+        }
+      });
+    }
   });
   containers.forEach((container) => {
     var viewYear = curNepyear;
@@ -342,67 +351,72 @@ export function buildNepaliCalendars(options = {}) {
     var selectedMonth = curNepmonth;
     var selectedNepday = curNepday;
 
-    container.correspondingInput.addEventListener("change", (event)=>{
-      if(container.correspondingInput.value.match(/[^0-9-]+/) ){
-        container.correspondingInput.value="";
+    if (selectedDate) {
+      (selectedYear = parseInt(selectedDate.split("-")[0])),
+        (selectedMonth = parseInt(selectedDate.split("-")[1]) - 1),
+        (selectedNepday = parseInt(selectedDate.split("-")[2]));
+    }
+
+    container.correspondingInput.addEventListener("change", (event) => {
+      if (container.correspondingInput.value.match(/[^0-9-]+/)) {
+        container.correspondingInput.value = "";
         invalidDateFunction();
         return;
       }
       const enteredDate = container.correspondingInput.value.split("-");
       const year = parseInt(enteredDate[0]);
-      if (year< minNepYear || year > maxNepYear){
-        container.correspondingInput.value="";
+      if (year < minNepYear || year > maxNepYear) {
+        container.correspondingInput.value = "";
         invalidDateFunction();
         return;
       }
       const month = parseInt(enteredDate[1]);
-      if(month<0 || month>11){
-        container.correspondingInput.value="";
+      if (month < 0 || month > 11) {
+        container.correspondingInput.value = "";
         invalidDateFunction();
         return;
       }
       const day = parseInt(enteredDate[2]);
 
-      if(day<1 || day>daysInMonth(year,month-1)){
-        container.correspondingInput.value="";
+      if (day < 1 || day > daysInMonth(year, month - 1)) {
+        container.correspondingInput.value = "";
         invalidDateFunction();
         return;
       }
-       if (
-              ((day > curNepday &&
-                month-1 == curNepmonth &&
-                year == curNepyear) ||
-                year > curNepyear ||
-                (month-1 > curNepmonth && year == curNepyear)) &&
-              disableLaterDates
-            ) {
-              container.correspondingInput.value="";
+      if (
+        ((day > curNepday && month - 1 == curNepmonth && year == curNepyear) ||
+          year > curNepyear ||
+          (month - 1 > curNepmonth && year == curNepyear)) &&
+        disableLaterDates
+      ) {
+        container.correspondingInput.value = "";
         invalidDateFunction();
-              return;
-            }
-            if (
-              ((day < curNepday &&
-                month-1 == curNepmonth &&
-                year == curNepyear) ||
-                year < curNepyear ||
-                (month-1 < curNepmonth && year == curNepyear)) &&
-              disableEarlierDates
-            ) {
-              container.correspondingInput.value="";
+        return;
+      }
+      if (
+        ((day < curNepday && month - 1 == curNepmonth && year == curNepyear) ||
+          year < curNepyear ||
+          (month - 1 < curNepmonth && year == curNepyear)) &&
+        disableEarlierDates
+      ) {
+        container.correspondingInput.value = "";
         invalidDateFunction();
-              return;
-  }
-      selectedYear=year;
-      selectedMonth=month-1;
-      selectedNepday=day;
-      viewYear=year;
-      viewMonth=month-1;
-      yearView.value=year;
-      monthView.value=month-1;
-      updateCalendar(topBar,calendarGrid);
-      
-      
-    })
+        return;
+      }
+      selectedYear = year;
+      selectedMonth = month - 1;
+      selectedNepday = day;
+      viewYear = year;
+      viewMonth = month - 1;
+
+      yearView.value = year;
+      monthView.value = month - 1;
+      updateCalendar(topBar, calendarGrid);
+    });
+
+    if (selectedDate) {
+      (viewMonth = selectedMonth), (viewYear = selectedYear);
+    }
 
     var selectedYearStart = null;
     var selectedMonthStart = null;
@@ -441,7 +455,7 @@ export function buildNepaliCalendars(options = {}) {
       option.textContent = year;
       yearView.appendChild(option);
     });
-    yearView.value = curNepyear;
+    yearView.value = viewYear;
 
     months.forEach((month) => {
       const option = document.createElement("option");
@@ -449,7 +463,7 @@ export function buildNepaliCalendars(options = {}) {
       option.textContent = month;
       monthView.appendChild(option);
     });
-    monthView.value = selectedMonth;
+    monthView.value = viewMonth;
 
     topBar.classList.add("top-bar");
 
@@ -595,6 +609,16 @@ export function buildNepaliCalendars(options = {}) {
           dayDiv.classList.add("currentDate");
         }
 
+        if (
+          day == curNepday &&
+          viewMonth == curNepmonth &&
+          viewYear == curNepyear &&
+          disableTodaysDate
+        ) {
+          dayDiv.classList.add("disabled-day-div");
+          dayDiv.classList.remove("selectedDate");
+        }
+
         if (!rangeSelection) {
           if (
             day == selectedNepday &&
@@ -630,14 +654,14 @@ export function buildNepaliCalendars(options = {}) {
 
             if (devnagariNumbersReturn) {
               container.correspondingInput.value = ndc.toDevanagariNumber(
-                `${selectedYear}-${String(selectedMonth+1).padStart(
+                `${selectedYear}-${String(selectedMonth + 1).padStart(
                   2,
                   "0"
                 )}-${String(selectedNepday).padStart(2, "0")}`
               );
             } else {
               container.correspondingInput.value = `${selectedYear}-${String(
-                selectedMonth+1
+                selectedMonth + 1
               ).padStart(2, "0")}-${String(selectedNepday).padStart(2, "0")}`;
             }
 
@@ -649,9 +673,14 @@ export function buildNepaliCalendars(options = {}) {
             updateCalendar(topBar, calendarGrid);
 
             changeFunction({
+              dateString: `${selectedYear}-${String(selectedMonth + 1).padStart(
+                2,
+                "0"
+              )}-${String(selectedNepday).padStart(2, "0")}`,
               nepaliYear: selectedYear,
-              nepaliMonth: selectedMonth+1,
+              nepaliMonth: selectedMonth + 1,
               nepaliDay: selectedNepday,
+              itemId: container.correspondingInput.id,
             });
           });
         } else {
@@ -737,7 +766,7 @@ export function buildNepaliCalendars(options = {}) {
 
     monthView.addEventListener("change", (event) => {
       viewMonth = parseInt(event.target.value);
-      console.log(viewMonth)
+      console.log(viewMonth);
       updateCalendar(topBar, calendarGrid);
     });
 
@@ -745,4 +774,3 @@ export function buildNepaliCalendars(options = {}) {
     container.appendChild(calendarGrid);
   });
 }
-

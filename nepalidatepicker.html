@@ -7,10 +7,24 @@
     <link rel="stylesheet" href="./nepalidatepicker.css">
     <script src="./nepalidatepicker.js">
     </script>
+
+    <style>
+        body{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            vertical-align: center;
+            height: 100vh;
+            background-color: gray;
+        }
+        input{
+            margin: 3rem;
+        }
+    </style>
 </head>
 <body>
 
-        <input class="nepaliDatePickerOlderDatesDisable" type="text">
+        <input class="nepaliDatePickerOlderDatesDisable" id="test123" type="text">
         <input class="nepaliDatePicker" type="text">
 </body>
 <script>
@@ -19,7 +33,10 @@
             {nepaliDatePickerClassName:"nepaliDatePickerOlderDatesDisable",
             disableLaterDates:true,
             closeOnSelect:false,
+            disableTodaysDate:false,
             changeFunction : (data) => {console.log(data)},
+            selectedDate : "2059-06-29",
+            closeOnLoseFocus: true,
             invalidDateFunction : ()=>{
             }
         }
