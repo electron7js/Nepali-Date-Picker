@@ -118,12 +118,17 @@
   font-weight: bold;
 }
 
+.nepali-date-picker-container select.english-month-view {
+  font-size: small;
+}
+
 .nepali-date-picker-container select {
   font-size: large;
   border: 0;
   overflow: visible;
   z-index: 100;
   padding: 10px;
+  max-width: 40%;
 }
 
 .nepali-date-picker-container .nav-button {

@@ -26,6 +26,8 @@
 
         <input class="nepaliDatePickerOlderDatesDisable" id="test123" type="text">
         <input class="nepaliDatePicker" type="text">
+        <input class="englishDatePicker" type="text">
+
 </body>
 <script>
         buildNepaliCalendars();
@@ -41,6 +43,20 @@
             }
         }
         );
+
+        buildEnglishCalendars(
+              {englishDatePickerClassName:"englishDatePicker",
+            disableLaterDates:true,
+            closeOnSelect:false,
+            disableTodaysDate:false,
+            changeFunction : (data) => {console.log(data)},
+            selectedDate : "2002-10-15",
+            closeOnLoseFocus: true,
+            invalidDateFunction : ()=>{
+            }
+        }
+        );
+
 
     </script>
 
