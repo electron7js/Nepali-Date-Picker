@@ -118,6 +118,11 @@
   font-weight: bold;
 }
 
+.nepali-date-picker-container select{
+  font-size: small;
+}
+
+
 .nepali-date-picker-container select.english-month-view {
   font-size: small;
 }

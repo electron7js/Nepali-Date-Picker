@@ -25,12 +25,24 @@
 <body>
 
         <input class="nepaliDatePickerOlderDatesDisable" id="test123" type="text">
-        <input class="nepaliDatePicker" type="text">
+        <input class="nepaliDatePicker" type="text">        
         <input class="englishDatePicker" type="text">
 
 </body>
 <script>
-        buildNepaliCalendars();
+        buildNepaliCalendars(
+            {
+                // nepaliDatePickerClassName:"nepaliDatePickerOlderDatesDisable",
+            disableLaterDates:true,
+            closeOnSelect:false,
+            disableTodaysDate:false,
+            changeFunction : (data) => {console.log(data)},
+            selectedDate : "2059-06-29",
+            closeOnLoseFocus: true,
+            invalidDateFunction : ()=>{
+            }
+        }
+        );
         buildNepaliCalendars(
             {nepaliDatePickerClassName:"nepaliDatePickerOlderDatesDisable",
             disableLaterDates:true,

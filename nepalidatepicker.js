@@ -295,7 +295,7 @@ function buildNepaliCalendars(options = {}) {
     changeFunction = () => {},
     selectedDate = null,
     invalidDateFunction = () => {},
-    closeOnLoseFocus = false
+    closeOnLoseFocus = false,
   } = options;
 
   const today = new Date();
@@ -775,12 +775,6 @@ function buildNepaliCalendars(options = {}) {
   });
 }
 
-
-
-
-
-
-
 function buildEnglishCalendars(options = {}) {
   const {
     englishDatePickerClassName = "englishDatePicker",
@@ -794,13 +788,12 @@ function buildEnglishCalendars(options = {}) {
     changeFunction = () => {},
     selectedDate = null,
     invalidDateFunction = () => {},
-    closeOnLoseFocus = false
+    closeOnLoseFocus = false,
   } = options;
 
-
   function daysInMonth(year, month) {
-  return new Date(year, month+1, 0).getDate();
-}
+    return new Date(year, month + 1, 0).getDate();
+  }
   const today = new Date();
   today.setHours(0, 0, 0);
   var englishYear = today.getFullYear();
@@ -814,12 +807,11 @@ function buildEnglishCalendars(options = {}) {
   // var curNepyear = parseInt(todayNepali.split("-")[0]);
   // var curNepmonth = parseInt(todayNepali.split("-")[1]) - 1;
   // var curNepday = parseInt(todayNepali.split("-")[2]);
-  
 
   var curNepyear = englishYear;
   var curNepmonth = englishMonthIndex;
   var curNepday = englishDayIndex;
-  
+
   const maxNepYear = ndc.getMaxNepaliYear();
   const minNepYear = ndc.getMinNepaliYear();
 
@@ -1285,4 +1277,3 @@ function buildEnglishCalendars(options = {}) {
     container.appendChild(calendarGrid);
   });
 }
-
