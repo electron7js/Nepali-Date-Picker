@@ -452,7 +452,7 @@ function buildNepaliCalendars(options = {}) {
     years.forEach((year) => {
       const option = document.createElement("option");
       option.value = year;
-      option.textContent = year;
+      option.textContent = !devnagariNumbersDisplay? year:ndc.toDevanagariNumber(year);
       yearView.appendChild(option);
     });
     yearView.value = viewYear;
@@ -547,7 +547,10 @@ function buildNepaliCalendars(options = {}) {
 
       for (let day = 1; day <= daysInMonth(viewYear, viewMonth); day++) {
         const dayDiv = document.createElement("div");
-        const weekDays = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"];
+         var weekDays = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"];
+
+        if(devnagariNumbersDisplay)
+         weekDays = ["आइत", "सोम", "मंगल", "बुध", "बिही", "शुक्र", "शनि"];
 
         if (day == 1) {
           weekDays.forEach((day) => {
