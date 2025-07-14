@@ -276,6 +276,22 @@ const ndc = {
   getMinNepaliYear: () => {
     return Math.min(...Object.keys(ndc.nepaliYearMonths).map(Number));
   },
+  toEnglishNumber:(devanagariNumber)=>{
+    const devanagariToEnglishMap = {
+        '०': '0',
+        '१': '1',
+        '२': '2',
+        '३': '3',
+        '४': '4',
+        '५': '5',
+        '६': '6',
+        '७': '7',
+        '८': '8',
+        '९': '9'
+    };
+
+    return devanagariNumber.split('').map(char => devanagariToEnglishMap[char] || char).join('');
+}
 };
 
 function daysInMonth(year, month) {
