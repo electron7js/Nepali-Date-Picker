@@ -312,6 +312,7 @@ function buildNepaliCalendars(options = {}) {
     selectedDate = null,
     invalidDateFunction = () => {},
     closeOnLoseFocus = false,
+    fiscalYearSelection=false,
   } = options;
 
   const today = new Date();
@@ -450,7 +451,24 @@ function buildNepaliCalendars(options = {}) {
     // monthView.outerHTML="Month:"+(selectedMonth+1);
 
     const years = Object.keys(ndc.nepaliYearMonths);
-    const months = [
+   
+      var months = [
+        "Baisakh",
+        "Jestha",
+        "Ashadh",
+        "Shrawan",
+        "Bhadra",
+        "Ashoj",
+        "Kartik",
+        "Mangsir",
+        "Poush",
+        "Magh",
+        "Falgun",
+        "Chaitra",
+      ];
+
+    if(devnagariNumbersDisplay){
+       months = [
       "बैशाख",
       "जेठ",
       "असार",
@@ -464,11 +482,17 @@ function buildNepaliCalendars(options = {}) {
       "फागुन",
       "चैत",
     ];
+    }
 
     years.forEach((year) => {
       const option = document.createElement("option");
       option.value = year;
-      option.textContent = !devnagariNumbersDisplay? year:ndc.toDevanagariNumber(year);
+      option.textContent =  !devnagariNumbersDisplay? year:ndc.toDevanagariNumber(year);
+      if (fiscalYearSelection){
+              option.textContent =  !devnagariNumbersDisplay?  year+'/'+(parseInt(year)+1)+''.slice(2)
+:ndc.toDevanagariNumber( year+'/'+(parseInt(year)+1)+''.slice(2)
+);
+      }
       yearView.appendChild(option);
     });
     yearView.value = viewYear;
