@@ -294,11 +294,13 @@ const ndc = {
 }
 };
 
-function daysInMonth(year, month) {
-  return ndc.nepaliYearMonths[year][month];
-}
+
 
 function buildNepaliCalendars(options = {}) {
+
+  function daysInMonth(year, month) {
+      return ndc.nepaliYearMonths[year][month];
+    }
   const {
     nepaliDatePickerClassName = "nepaliDatePicker",
     rangeSelection = false,
@@ -764,12 +766,24 @@ function buildNepaliCalendars(options = {}) {
      }
 
         if (!rangeSelection) {
+          if (!fiscalYearSelection)
+          {
           if (
             day == selectedNepday &&
             selectedMonth == viewMonth &&
             selectedYear == viewYear
           ) {
             dayDiv.classList.add("selectedDate");
+          }
+          }
+          else{
+            if (
+            day == selectedNepday &&
+            selectedMonth == viewMonth &&
+            selectedYear == (viewMonth<3?viewYear+1:viewYear)
+          ) {
+            dayDiv.classList.add("selectedDate");
+          }
           }
           dayDiv.addEventListener("click", (event) => {
             if (
