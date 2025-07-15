@@ -362,6 +362,9 @@ function buildNepaliCalendars(options = {}) {
   containers.forEach((container) => {
     var viewYear = curNepyear;
     var viewMonth = curNepmonth;
+      if(fiscalYearSelection){
+        viewYear=(viewMonth<3?viewYear-1:viewYear);
+      }
     // var selectedNepday = curNepday;
 
     var selectedYear = curNepyear;
@@ -424,6 +427,8 @@ function buildNepaliCalendars(options = {}) {
       selectedMonth = month - 1;
       selectedNepday = day;
       viewYear = year;
+      
+    
       viewMonth = month - 1;
 
       yearView.value = year;
@@ -637,7 +642,7 @@ function buildNepaliCalendars(options = {}) {
       // calendarGrid.style.gap = "5px";
       // calendarGrid.style.maxWidth="260px";
       calendarGrid.classList.add("calendar-grid");
-      for (let day = 1; day <= daysInMonth(viewYear, viewMonth); day++) {
+      for (let day = 1; day <= daysInMonth(!fiscalYearSelection?viewYear:((viewMonth<3?viewYear+1:viewYear)), viewMonth); day++) {
         const dayDiv = document.createElement("div");
          var weekDays = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"];
 
