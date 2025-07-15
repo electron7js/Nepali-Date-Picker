@@ -18,11 +18,13 @@
 }
 
 .nepali-date-picker-container .top-bar {
+  margin:auto;
   margin-top: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 00px;
+  width: 100%;
   margin-bottom: 8px;
 }
 .nepali-date-picker-container .top-bar select{
@@ -40,7 +42,7 @@
   /* padding: 4px 4px; */
   width: 7px;
   height: 16px;
-  border-radius: 100px;
+  border-radius: 4px;
   cursor: pointer;
   font-weight: bold;
   font-size: 10px;
@@ -71,6 +73,15 @@
 .nepali-date-picker-container .day-div:hover {
   /* background-color: #f3f4f6; */
   transform: scale(1.05);
+}
+
+
+.nepali-date-picker-container .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    max-width: 240px;
+    margin:auto;
 }
 
 .nepali-date-picker-container .weekday-div {
@@ -123,6 +134,13 @@
 }
 
 
+.nepali-date-picker-container select.year-view {
+  font-size: small;
+}
+.nepali-date-picker-container select.month-view {
+  font-size: small;
+  min-width: 84px;
+}
 .nepali-date-picker-container select.english-month-view {
   font-size: small;
 }
@@ -146,6 +164,7 @@
   cursor: pointer;
   transition: background-color 0.2s, transform 0.1s;
   color: #374151; /* Dark gray text */
+  margin: auto;
 }
 
 .nepali-date-picker-container .nav-button:hover {

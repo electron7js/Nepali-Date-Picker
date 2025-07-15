@@ -448,6 +448,8 @@ function buildNepaliCalendars(options = {}) {
     const yearView = document.createElement("select");
     const monthView = document.createElement("select");
 
+    yearView.classList.add("year-view")
+    monthView.classList.add("month-view")
     // monthView.outerHTML="Month:"+(selectedMonth+1);
 
     const years = Object.keys(ndc.nepaliYearMonths);
@@ -489,9 +491,8 @@ function buildNepaliCalendars(options = {}) {
       option.value = year;
       option.textContent =  !devnagariNumbersDisplay? year:ndc.toDevanagariNumber(year);
       if (fiscalYearSelection){
-              option.textContent =  !devnagariNumbersDisplay?  year+'/'+(parseInt(year)+1)+''.slice(2)
-:ndc.toDevanagariNumber( year+'/'+(parseInt(year)+1)+''.slice(2)
-);
+              option.textContent =  !devnagariNumbersDisplay? year+'/'+((parseInt(year)+1)+'').slice(2,4)
+:ndc.toDevanagariNumber( year+'/'+((parseInt(year)+1)+'').slice(2,4));
       }
       yearView.appendChild(option);
     });
@@ -503,6 +504,15 @@ function buildNepaliCalendars(options = {}) {
       option.textContent = month;
       monthView.appendChild(option);
     });
+          if (fiscalYearSelection){
+            const options = Array.from(monthView.options);
+          const lastThree = options.slice(-9);
+          lastThree.forEach(option => monthView.removeChild(option));
+          lastThree.reverse().forEach(option => monthView.insertBefore(option, monthView.firstChild));
+          }
+
+
+
     monthView.value = viewMonth;
 
     topBar.classList.add("top-bar");
@@ -517,6 +527,8 @@ function buildNepaliCalendars(options = {}) {
     backButton.classList.add("nav-button");
     forwardButton.classList.add("nav-button");
     closeButton.classList.add("close-button");
+
+        if(!fiscalYearSelection){
 
     backButton.addEventListener("click", () => {
       if (viewMonth > 0) {
@@ -541,7 +553,46 @@ function buildNepaliCalendars(options = {}) {
       monthView.value = viewMonth;
       updateCalendar(topBar, calendarGrid);
     });
+      }
 
+      else{
+       
+      backButton.addEventListener("click", () => {
+       if (viewMonth > 0) {
+        viewMonth -= 1;
+      } else {
+        viewMonth = 11;
+
+      }
+                console.log(viewMonth);
+
+        // else {
+        //           console.log(viewMonth);
+
+        //   viewMonth = 11;
+        // }
+        if(viewMonth==2){
+          viewYear -= 1;
+          yearView.value = viewYear;
+        }
+        monthView.value = viewMonth;
+        updateCalendar(topBar, calendarGrid);
+    });
+
+    forwardButton.addEventListener("click", () => {
+      if (viewMonth < 11) {
+        viewMonth += 1;
+      } else {
+        viewMonth = 0;
+      }
+      if( viewMonth==3){
+        viewYear += 1;
+        yearView.value = viewYear;
+      }
+      monthView.value = viewMonth;
+      updateCalendar(topBar, calendarGrid);
+    });
+      }
     closeButton.addEventListener("click", () => {
       container.style.display = "none";
     });
@@ -581,10 +632,11 @@ function buildNepaliCalendars(options = {}) {
         topBar.startDate.innerHTML = `Start Date: ${selectedYearStart}-${selectedMonthStart}-${selectedNepdayStart}  End Date:  ${selectedYearEnd}-${selectedMonthEnd}-${selectedNepdayEnd}`;
 
       calendarGrid.innerHTML = "";
-      calendarGrid.style.display = "grid";
-      calendarGrid.style.gridTemplateColumns = "repeat(7, 1fr)";
-      calendarGrid.style.gap = "5px";
-
+      // calendarGrid.style.display = "grid";
+      // calendarGrid.style.gridTemplateColumns = "repeat(7, 1fr)";
+      // calendarGrid.style.gap = "5px";
+      // calendarGrid.style.maxWidth="260px";
+      calendarGrid.classList.add("calendar-grid");
       for (let day = 1; day <= daysInMonth(viewYear, viewMonth); day++) {
         const dayDiv = document.createElement("div");
          var weekDays = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"];
@@ -607,7 +659,7 @@ function buildNepaliCalendars(options = {}) {
             dayoffset++
           ) {
             const dayDiv = document.createElement("div");
-            dayDiv.classList.add("day-div");
+            dayDiv.classList.add("disabled-day-div");
             calendarGrid.appendChild(dayDiv);
           }
         }
@@ -623,6 +675,8 @@ function buildNepaliCalendars(options = {}) {
         //   dayDiv.dataset.month = month;
         //   dayDiv.dataset.year = year;
         dayDiv.classList.add("day-div");
+
+        if(!fiscalYearSelection){
         if (
           ((day > curNepday &&
             viewMonth == curNepmonth &&
@@ -651,16 +705,58 @@ function buildNepaliCalendars(options = {}) {
         ) {
           dayDiv.classList.add("currentDate");
         }
+        if (
+                day == curNepday &&
+                viewMonth == curNepmonth &&
+                viewYear == curNepyear &&
+                disableTodaysDate
+              ) {
+                dayDiv.classList.add("disabled-day-div");
+                dayDiv.classList.remove("selectedDate");
+              }
+      }
+     else{
+              if (
+          ((day > curNepday &&
+            viewMonth == curNepmonth &&
+            (viewMonth<3?viewYear+1:viewYear) == curNepyear) ||
+            (viewMonth<3?viewYear+1:viewYear) > curNepyear ||
+            (viewMonth > curNepmonth && (viewMonth<3?viewYear+1:viewYear) == curNepyear)) &&
+          disableLaterDates
+        ) {
+          dayDiv.classList.add("disabled-day-div");
+        }
+        if (
+          ((day < curNepday &&
+            viewMonth == curNepmonth &&
+            (viewMonth<3?viewYear+1:viewYear) == curNepyear) ||
+            (viewMonth<3?viewYear+1:viewYear) < curNepyear ||
+            (viewMonth < curNepmonth && (viewMonth<3?viewYear+1:viewYear) == curNepyear)) &&
+          disableEarlierDates
+        ) {
+          dayDiv.classList.add("disabled-day-div");
+        }
 
         if (
           day == curNepday &&
           viewMonth == curNepmonth &&
-          viewYear == curNepyear &&
-          disableTodaysDate
+          (viewMonth<3?viewYear+1:viewYear) == curNepyear
         ) {
-          dayDiv.classList.add("disabled-day-div");
-          dayDiv.classList.remove("selectedDate");
+          dayDiv.classList.add("currentDate");
         }
+        if (
+                day == curNepday &&
+                viewMonth == curNepmonth &&
+                (viewMonth<3?viewYear+1:viewYear) == curNepyear &&
+                disableTodaysDate
+              ) {
+                dayDiv.classList.add("disabled-day-div");
+                dayDiv.classList.remove("selectedDate");
+              }
+      
+
+
+     }
 
         if (!rangeSelection) {
           if (
@@ -694,6 +790,11 @@ function buildNepaliCalendars(options = {}) {
             selectedNepday = event.target.value;
             selectedMonth = parseInt(monthView.value);
             selectedYear = parseInt(yearView.value);
+
+
+                 if(fiscalYearSelection){
+              selectedYear=selectedMonth<3?selectedYear+1:selectedYear;
+            }
 
             if (devnagariNumbersReturn) {
               container.correspondingInput.value = ndc.toDevanagariNumber(
@@ -975,6 +1076,9 @@ function buildEnglishCalendars(options = {}) {
     const yearView = document.createElement("select");
     const monthView = document.createElement("select");
 
+    
+    yearView.classList.add("year-view")
+    monthView.classList.add("month-view")
     monthView.classList.add("english-month-view");
 
     // monthView.outerHTML="Month:"+(selectedMonth+1);
@@ -1087,7 +1191,12 @@ function buildEnglishCalendars(options = {}) {
         topBar.startDate.innerHTML = `Start Date: ${selectedYearStart}-${selectedMonthStart}-${selectedNepdayStart}  End Date:  ${selectedYearEnd}-${selectedMonthEnd}-${selectedNepdayEnd}`;
 
       calendarGrid.innerHTML = "";
-      calendarGrid.style.display = "grid";
+      // calendarGrid.style.display = "grid";
+      // calendarGrid.style.gridTemplateColumns = "repeat(7, 1fr)";
+      // calendarGrid.style.gap = "5px";
+      // calendarGrid.style.maxWidth="260px";
+      calendarGrid.classList.add("calendar-grid");
+            calendarGrid.style.display = "grid";
       calendarGrid.style.gridTemplateColumns = "repeat(7, 1fr)";
       calendarGrid.style.gap = "5px";
 
@@ -1110,7 +1219,7 @@ function buildEnglishCalendars(options = {}) {
             dayoffset++
           ) {
             const dayDiv = document.createElement("div");
-            dayDiv.classList.add("day-div");
+            dayDiv.classList.add("disabled-day-div");
             calendarGrid.appendChild(dayDiv);
           }
         }
@@ -1198,6 +1307,7 @@ function buildEnglishCalendars(options = {}) {
             selectedMonth = parseInt(monthView.value);
             selectedYear = parseInt(yearView.value);
 
+       
             if (devnagariNumbersReturn) {
               container.correspondingInput.value = ndc.toDevanagariNumber(
                 `${selectedYear}-${String(selectedMonth + 1).padStart(
