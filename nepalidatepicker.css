@@ -1,3 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+
 .nepali-date-picker-container {
   display: none;
   position: absolute;
@@ -85,15 +89,18 @@
 }
 
 .nepali-date-picker-container .weekday-div {
-  background-color: #9ca3af;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  background-color: #89b4ff;
   border: 1px solid #d1d5db;
+  color: rgb(215, 215, 156);
   /* padding: 8px; */
   text-align: center;
   color: white;
-  font-weight: bold;
   width: 28px;
   height: 28px;
-  font-size: 11px;
+  font-size: 10px;
   border-radius: 4px;
   display: flex;
   align-items: center;

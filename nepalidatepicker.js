@@ -650,6 +650,7 @@ function buildNepaliCalendars(options = {}) {
 
         if(devnagariNumbersDisplay)
          weekDays = ["आइत", "सोम", "मंगल", "बुध", "बिही", "शुक्र", "शनि"];
+        //  weekDays = ["आ", "सो", "मं", "बु", "बि", "शु", "श"];
 
         if (day == 1) {
           weekDays.forEach((day) => {
