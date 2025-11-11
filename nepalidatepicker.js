@@ -213,9 +213,9 @@ const ndc = {
   },
 
   getEnglishDate(year, month, day) {
-    if (year < 1970 || year > 2099) {
+    if (year < 1914 || year > 2099) {
       throw new Error(
-        "Only dates after 1970-01-01 and upto 2099-12-30 are supported"
+        "Only dates after 1914-01-01 and upto 2099-12-30 are supported"
       );
     }
     if (month < 0 || month > ndc.nepaliYearMonths[year][month]) {
@@ -1029,6 +1029,31 @@ function buildEnglishCalendars(options = {}) {
         return;
       }
       const enteredDate = container.correspondingInput.value.split("-");
+      if (enteredDate.length !== 3) {
+        container.correspondingInput.value = "";
+        invalidDateFunction();
+        return;
+      }
+        if (
+          enteredDate[0]<1914 || enteredDate[0]>2099
+        ){ 
+        container.correspondingInput.value = "";
+        invalidDateFunction();
+        return;
+      }
+            if (
+          enteredDate[1]<1 || enteredDate[1]>12
+            ) {
+        container.correspondingInput.value = "";
+        invalidDateFunction();
+        return;
+      }
+            if (          enteredDate[2]<1 || enteredDate[1]>32
+) {
+        container.correspondingInput.value = "";
+        invalidDateFunction();
+        return;
+      }
       const year = parseInt(enteredDate[0]);
       if (year < minNepYear || year > maxNepYear) {
         container.correspondingInput.value = "";
@@ -1068,6 +1093,8 @@ function buildEnglishCalendars(options = {}) {
         invalidDateFunction();
         return;
       }
+
+
       selectedYear = year;
       selectedMonth = month - 1;
       selectedNepday = day;
@@ -1235,7 +1262,7 @@ function buildEnglishCalendars(options = {}) {
           for (
             dayoffset = 1;
             dayoffset <=
-            new Date(ndc.getEnglishDate(viewYear, viewMonth + 1, 1)).getDay();
+            new Date(viewYear, viewMonth, 1).getDay();
             dayoffset++
           ) {
             const dayDiv = document.createElement("div");

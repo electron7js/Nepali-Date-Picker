@@ -864,6 +864,31 @@ export function buildEnglishCalendars(options = {}) {
         return;
       }
       const enteredDate = container.correspondingInput.value.split("-");
+      if (enteredDate.length !== 3) {
+        container.correspondingInput.value = "";
+        invalidDateFunction();
+        return;
+      }
+        if (
+          enteredDate[0]<1914 || enteredDate[0]>2099
+        ){ 
+        container.correspondingInput.value = "";
+        invalidDateFunction();
+        return;
+      }
+            if (
+          enteredDate[1]<1 || enteredDate[1]>12
+            ) {
+        container.correspondingInput.value = "";
+        invalidDateFunction();
+        return;
+      }
+            if (          enteredDate[2]<1 || enteredDate[1]>32
+) {
+        container.correspondingInput.value = "";
+        invalidDateFunction();
+        return;
+      }
       const year = parseInt(enteredDate[0]);
       if (year < minNepYear || year > maxNepYear) {
         container.correspondingInput.value = "";
@@ -903,6 +928,8 @@ export function buildEnglishCalendars(options = {}) {
         invalidDateFunction();
         return;
       }
+
+
       selectedYear = year;
       selectedMonth = month - 1;
       selectedNepday = day;
@@ -931,6 +958,9 @@ export function buildEnglishCalendars(options = {}) {
     const yearView = document.createElement("select");
     const monthView = document.createElement("select");
 
+    
+    yearView.classList.add("year-view")
+    monthView.classList.add("month-view")
     monthView.classList.add("english-month-view");
 
     // monthView.outerHTML="Month:"+(selectedMonth+1);
@@ -1043,7 +1073,12 @@ export function buildEnglishCalendars(options = {}) {
         topBar.startDate.innerHTML = `Start Date: ${selectedYearStart}-${selectedMonthStart}-${selectedNepdayStart}  End Date:  ${selectedYearEnd}-${selectedMonthEnd}-${selectedNepdayEnd}`;
 
       calendarGrid.innerHTML = "";
-      calendarGrid.style.display = "grid";
+      // calendarGrid.style.display = "grid";
+      // calendarGrid.style.gridTemplateColumns = "repeat(7, 1fr)";
+      // calendarGrid.style.gap = "5px";
+      // calendarGrid.style.maxWidth="260px";
+      calendarGrid.classList.add("calendar-grid");
+            calendarGrid.style.display = "grid";
       calendarGrid.style.gridTemplateColumns = "repeat(7, 1fr)";
       calendarGrid.style.gap = "5px";
 
@@ -1062,11 +1097,11 @@ export function buildEnglishCalendars(options = {}) {
           for (
             dayoffset = 1;
             dayoffset <=
-            new Date(ndc.getEnglishDate(viewYear, viewMonth + 1, 1)).getDay();
+            new Date(viewYear, viewMonth, 1).getDay();
             dayoffset++
           ) {
             const dayDiv = document.createElement("div");
-            dayDiv.classList.add("day-div");
+            dayDiv.classList.add("disabled-day-div");
             calendarGrid.appendChild(dayDiv);
           }
         }
@@ -1154,6 +1189,7 @@ export function buildEnglishCalendars(options = {}) {
             selectedMonth = parseInt(monthView.value);
             selectedYear = parseInt(yearView.value);
 
+       
             if (devnagariNumbersReturn) {
               container.correspondingInput.value = ndc.toDevanagariNumber(
                 `${selectedYear}-${String(selectedMonth + 1).padStart(
