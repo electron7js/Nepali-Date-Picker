@@ -120,6 +120,7 @@ buildNepaliCalendars(
         closeOnSelect: false,
         disableTodaysDate: false,
         changeFunction: (data) => {
+            apex.item(data.itemId).setValue(apex.item(data.itemId).getValue())
             ad_field = data.itemId.replace("_BS","_AD")
             apex.item(ad_field).setValue(
               formatDateToYYYYMMDD(  ndc.getEnglishDate(
@@ -140,6 +141,7 @@ buildEnglishCalendars(
         closeOnSelect: false,
         disableTodaysDate: false,
         changeFunction: (data) => {
+            apex.item(data.itemId).setValue(apex.item(data.itemId).getValue())
             bs_field = data.itemId.replace("_AD","_BS")
             apex.item(bs_field).setValue(
              ndc.getNepaliDate(
