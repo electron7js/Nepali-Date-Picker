@@ -258,7 +258,7 @@ const ndc = {
         }
       }
     }
-    console.log(year, month, day, year1, month1, day1, year2, month2, day2);
+    // console.log(year, month, day, year1, month1, day1, year2, month2, day2);
     return false;
   },
   toDevanagariNumber: (num) => {
@@ -337,6 +337,8 @@ function buildNepaliCalendars(options = {}) {
     `input.${nepaliDatePickerClassName}`
   );
 
+
+
   const containers = [];
 
   inputs.forEach((inp) => {
@@ -364,6 +366,7 @@ function buildNepaliCalendars(options = {}) {
   containers.forEach((container) => {
     var viewYear = curNepyear;
     var viewMonth = curNepmonth;
+
       if(fiscalYearSelection){
         viewYear=(viewMonth<3?viewYear-1:viewYear);
       }
@@ -379,30 +382,71 @@ function buildNepaliCalendars(options = {}) {
         (selectedNepday = parseInt(selectedDate.split("-")[2]));
     }
 
+        const invalidDateFunctionInternal = (data)=>{
+      invalidDateFunction(data);
+      // changeFunction(data);
+    }
+
     container.correspondingInput.addEventListener("change", (event) => {
       if (container.correspondingInput.value.match(/[^0-9-]+/)) {
         container.correspondingInput.value = "";
-        invalidDateFunction();
+        invalidDateFunctionInternal({
+              dateString: `${selectedYear}-${String(selectedMonth + 1).padStart(
+                2,
+                "0"
+              )}-${String(selectedNepday).padStart(2, "0")}`,
+              nepaliYear: selectedYear,
+              nepaliMonth: selectedMonth + 1,
+              nepaliDay: selectedNepday,
+              itemId: container.correspondingInput.id,
+            });
         return;
       }
       const enteredDate = container.correspondingInput.value.split("-");
       const year = parseInt(enteredDate[0]);
       if (year < minNepYear || year > maxNepYear) {
         container.correspondingInput.value = "";
-        invalidDateFunction();
+        invalidDateFunctionInternal({
+              dateString: `${selectedYear}-${String(selectedMonth + 1).padStart(
+                2,
+                "0"
+              )}-${String(selectedNepday).padStart(2, "0")}`,
+              nepaliYear: selectedYear,
+              nepaliMonth: selectedMonth + 1,
+              nepaliDay: selectedNepday,
+              itemId: container.correspondingInput.id,
+            });
         return;
       }
       const month = parseInt(enteredDate[1]);
       if (month < 0 || month > 11) {
         container.correspondingInput.value = "";
-        invalidDateFunction();
+        invalidDateFunctionInternal({
+              dateString: `${selectedYear}-${String(selectedMonth + 1).padStart(
+                2,
+                "0"
+              )}-${String(selectedNepday).padStart(2, "0")}`,
+              nepaliYear: selectedYear,
+              nepaliMonth: selectedMonth + 1,
+              nepaliDay: selectedNepday,
+              itemId: container.correspondingInput.id,
+            });
         return;
       }
       const day = parseInt(enteredDate[2]);
 
       if (day < 1 || day > daysInMonth(year, month - 1)) {
         container.correspondingInput.value = "";
-        invalidDateFunction();
+        invalidDateFunctionInternal({
+              dateString: `${selectedYear}-${String(selectedMonth + 1).padStart(
+                2,
+                "0"
+              )}-${String(selectedNepday).padStart(2, "0")}`,
+              nepaliYear: selectedYear,
+              nepaliMonth: selectedMonth + 1,
+              nepaliDay: selectedNepday,
+              itemId: container.correspondingInput.id,
+            });
         return;
       }
       if (
@@ -412,7 +456,16 @@ function buildNepaliCalendars(options = {}) {
         disableLaterDates
       ) {
         container.correspondingInput.value = "";
-        invalidDateFunction();
+        invalidDateFunctionInternal({
+              dateString: `${selectedYear}-${String(selectedMonth + 1).padStart(
+                2,
+                "0"
+              )}-${String(selectedNepday).padStart(2, "0")}`,
+              nepaliYear: selectedYear,
+              nepaliMonth: selectedMonth + 1,
+              nepaliDay: selectedNepday,
+              itemId: container.correspondingInput.id,
+            });
         return;
       }
       if (
@@ -422,7 +475,16 @@ function buildNepaliCalendars(options = {}) {
         disableEarlierDates
       ) {
         container.correspondingInput.value = "";
-        invalidDateFunction();
+        invalidDateFunctionInternal({
+              dateString: `${selectedYear}-${String(selectedMonth + 1).padStart(
+                2,
+                "0"
+              )}-${String(selectedNepday).padStart(2, "0")}`,
+              nepaliYear: selectedYear,
+              nepaliMonth: selectedMonth + 1,
+              nepaliDay: selectedNepday,
+              itemId: container.correspondingInput.id,
+            });
         return;
       }
       selectedYear = year;
@@ -436,6 +498,16 @@ function buildNepaliCalendars(options = {}) {
       yearView.value = year;
       monthView.value = month - 1;
       updateCalendar(topBar, calendarGrid);
+      changeFunction({
+              dateString: `${selectedYear}-${String(selectedMonth + 1).padStart(
+                2,
+                "0"
+              )}-${String(selectedNepday).padStart(2, "0")}`,
+              nepaliYear: selectedYear,
+              nepaliMonth: selectedMonth + 1,
+              nepaliDay: selectedNepday,
+              itemId: container.correspondingInput.id,
+            });
     });
 
     if (selectedDate) {
@@ -571,7 +643,7 @@ function buildNepaliCalendars(options = {}) {
         viewMonth = 11;
 
       }
-                console.log(viewMonth);
+                // console.log(viewMonth);
 
         // else {
         //           console.log(viewMonth);
@@ -879,39 +951,39 @@ function buildNepaliCalendars(options = {}) {
               selectedNepdayStart = event.target.innerHTML;
               selectedMonthStart = monthView.value;
               selectedYearStart = yearView.value;
-              console.log(
-                "start " +
-                  selectedNepdayStart +
-                  " " +
-                  selectedMonthStart +
-                  " " +
-                  selectedYearStart +
-                  "\nend " +
-                  selectedNepdayEnd +
-                  " " +
-                  selectedMonthEnd +
-                  " " +
-                  selectedYearEnd +
-                  "end"
-              );
+              // console.log(
+              //   "start " +
+              //     selectedNepdayStart +
+              //     " " +
+              //     selectedMonthStart +
+              //     " " +
+              //     selectedYearStart +
+              //     "\nend " +
+              //     selectedNepdayEnd +
+              //     " " +
+              //     selectedMonthEnd +
+              //     " " +
+              //     selectedYearEnd +
+              //     "end"
+              // );
             } else {
               selectedNepdayEnd = event.target.innerHTML;
               selectedMonthEnd = monthView.value;
               selectedYearEnd = yearView.value;
-              console.log(
-                "start " +
-                  selectedNepdayStart +
-                  " " +
-                  selectedMonthStart +
-                  " " +
-                  selectedYearStart +
-                  "\nend " +
-                  selectedNepdayEnd +
-                  " " +
-                  selectedMonthEnd +
-                  " " +
-                  selectedYearEnd
-              );
+              // console.log(
+              //   "start " +
+              //     selectedNepdayStart +
+              //     " " +
+              //     selectedMonthStart +
+              //     " " +
+              //     selectedYearStart +
+              //     "\nend " +
+              //     selectedNepdayEnd +
+              //     " " +
+              //     selectedMonthEnd +
+              //     " " +
+              //     selectedYearEnd
+              // );
             }
             updateCalendar(topBar, calendarGrid);
           });
@@ -930,7 +1002,6 @@ function buildNepaliCalendars(options = {}) {
 
     monthView.addEventListener("change", (event) => {
       viewMonth = parseInt(event.target.value);
-      console.log(viewMonth);
       updateCalendar(topBar, calendarGrid);
     });
 
@@ -1022,55 +1093,132 @@ function buildEnglishCalendars(options = {}) {
         (selectedNepday = parseInt(selectedDate.split("-")[2]));
     }
 
+     const invalidDateFunctionInternal = (data)=>{
+      invalidDateFunction(data);
+      // changeFunction(data);
+    }
+
     container.correspondingInput.addEventListener("change", (event) => {
       if (container.correspondingInput.value.match(/[^0-9-]+/)) {
         container.correspondingInput.value = "";
-        invalidDateFunction();
+        invalidDateFunctionInternal({
+              dateString: `${selectedYear}-${String(selectedMonth + 1).padStart(
+                2,
+                "0"
+              )}-${String(selectedNepday).padStart(2, "0")}`,
+              nepaliYear: selectedYear,
+              nepaliMonth: selectedMonth + 1,
+              nepaliDay: selectedNepday,
+              itemId: container.correspondingInput.id,
+            });
         return;
       }
       const enteredDate = container.correspondingInput.value.split("-");
       if (enteredDate.length !== 3) {
         container.correspondingInput.value = "";
-        invalidDateFunction();
+        invalidDateFunctionInternal({
+              dateString: `${selectedYear}-${String(selectedMonth + 1).padStart(
+                2,
+                "0"
+              )}-${String(selectedNepday).padStart(2, "0")}`,
+              nepaliYear: selectedYear,
+              nepaliMonth: selectedMonth + 1,
+              nepaliDay: selectedNepday,
+              itemId: container.correspondingInput.id,
+            });
         return;
       }
         if (
           enteredDate[0]<1914 || enteredDate[0]>2099
         ){ 
         container.correspondingInput.value = "";
-        invalidDateFunction();
+        invalidDateFunctionInternal({
+              dateString: `${selectedYear}-${String(selectedMonth + 1).padStart(
+                2,
+                "0"
+              )}-${String(selectedNepday).padStart(2, "0")}`,
+              nepaliYear: selectedYear,
+              nepaliMonth: selectedMonth + 1,
+              nepaliDay: selectedNepday,
+              itemId: container.correspondingInput.id,
+            });
         return;
       }
             if (
           enteredDate[1]<1 || enteredDate[1]>12
             ) {
         container.correspondingInput.value = "";
-        invalidDateFunction();
+        invalidDateFunctionInternal({
+              dateString: `${selectedYear}-${String(selectedMonth + 1).padStart(
+                2,
+                "0"
+              )}-${String(selectedNepday).padStart(2, "0")}`,
+              nepaliYear: selectedYear,
+              nepaliMonth: selectedMonth + 1,
+              nepaliDay: selectedNepday,
+              itemId: container.correspondingInput.id,
+            });
         return;
       }
             if (          enteredDate[2]<1 || enteredDate[1]>32
 ) {
         container.correspondingInput.value = "";
-        invalidDateFunction();
+        invalidDateFunctionInternal({
+              dateString: `${selectedYear}-${String(selectedMonth + 1).padStart(
+                2,
+                "0"
+              )}-${String(selectedNepday).padStart(2, "0")}`,
+              nepaliYear: selectedYear,
+              nepaliMonth: selectedMonth + 1,
+              nepaliDay: selectedNepday,
+              itemId: container.correspondingInput.id,
+            });
         return;
       }
       const year = parseInt(enteredDate[0]);
       if (year < minNepYear || year > maxNepYear) {
         container.correspondingInput.value = "";
-        invalidDateFunction();
+        invalidDateFunctionInternal({
+              dateString: `${selectedYear}-${String(selectedMonth + 1).padStart(
+                2,
+                "0"
+              )}-${String(selectedNepday).padStart(2, "0")}`,
+              nepaliYear: selectedYear,
+              nepaliMonth: selectedMonth + 1,
+              nepaliDay: selectedNepday,
+              itemId: container.correspondingInput.id,
+            });
         return;
       }
       const month = parseInt(enteredDate[1]);
       if (month < 0 || month > 11) {
         container.correspondingInput.value = "";
-        invalidDateFunction();
+        invalidDateFunctionInternal({
+              dateString: `${selectedYear}-${String(selectedMonth + 1).padStart(
+                2,
+                "0"
+              )}-${String(selectedNepday).padStart(2, "0")}`,
+              nepaliYear: selectedYear,
+              nepaliMonth: selectedMonth + 1,
+              nepaliDay: selectedNepday,
+              itemId: container.correspondingInput.id,
+            });
         return;
       }
       const day = parseInt(enteredDate[2]);
 
       if (day < 1 || day > daysInMonth(year, month - 1)) {
         container.correspondingInput.value = "";
-        invalidDateFunction();
+        invalidDateFunctionInternal({
+              dateString: `${selectedYear}-${String(selectedMonth + 1).padStart(
+                2,
+                "0"
+              )}-${String(selectedNepday).padStart(2, "0")}`,
+              nepaliYear: selectedYear,
+              nepaliMonth: selectedMonth + 1,
+              nepaliDay: selectedNepday,
+              itemId: container.correspondingInput.id,
+            });
         return;
       }
       if (
@@ -1080,7 +1228,16 @@ function buildEnglishCalendars(options = {}) {
         disableLaterDates
       ) {
         container.correspondingInput.value = "";
-        invalidDateFunction();
+        invalidDateFunctionInternal({
+              dateString: `${selectedYear}-${String(selectedMonth + 1).padStart(
+                2,
+                "0"
+              )}-${String(selectedNepday).padStart(2, "0")}`,
+              nepaliYear: selectedYear,
+              nepaliMonth: selectedMonth + 1,
+              nepaliDay: selectedNepday,
+              itemId: container.correspondingInput.id,
+            });
         return;
       }
       if (
@@ -1090,7 +1247,16 @@ function buildEnglishCalendars(options = {}) {
         disableEarlierDates
       ) {
         container.correspondingInput.value = "";
-        invalidDateFunction();
+        invalidDateFunctionInternal({
+              dateString: `${selectedYear}-${String(selectedMonth + 1).padStart(
+                2,
+                "0"
+              )}-${String(selectedNepday).padStart(2, "0")}`,
+              nepaliYear: selectedYear,
+              nepaliMonth: selectedMonth + 1,
+              nepaliDay: selectedNepday,
+              itemId: container.correspondingInput.id,
+            });
         return;
       }
 
@@ -1104,6 +1270,16 @@ function buildEnglishCalendars(options = {}) {
       yearView.value = year;
       monthView.value = month - 1;
       updateCalendar(topBar, calendarGrid);
+            changeFunction({
+              dateString: `${selectedYear}-${String(selectedMonth + 1).padStart(
+                2,
+                "0"
+              )}-${String(selectedNepday).padStart(2, "0")}`,
+              nepaliYear: selectedYear,
+              nepaliMonth: selectedMonth + 1,
+              nepaliDay: selectedNepday,
+              itemId: container.correspondingInput.id,
+            });
     });
 
     if (selectedDate) {
@@ -1418,39 +1594,39 @@ function buildEnglishCalendars(options = {}) {
               selectedNepdayStart = event.target.innerHTML;
               selectedMonthStart = monthView.value;
               selectedYearStart = yearView.value;
-              console.log(
-                "start " +
-                  selectedNepdayStart +
-                  " " +
-                  selectedMonthStart +
-                  " " +
-                  selectedYearStart +
-                  "\nend " +
-                  selectedNepdayEnd +
-                  " " +
-                  selectedMonthEnd +
-                  " " +
-                  selectedYearEnd +
-                  "end"
-              );
+              // console.log(
+              //   "start " +
+              //     selectedNepdayStart +
+              //     " " +
+              //     selectedMonthStart +
+              //     " " +
+              //     selectedYearStart +
+              //     "\nend " +
+              //     selectedNepdayEnd +
+              //     " " +
+              //     selectedMonthEnd +
+              //     " " +
+              //     selectedYearEnd +
+              //     "end"
+              // );
             } else {
               selectedNepdayEnd = event.target.innerHTML;
               selectedMonthEnd = monthView.value;
               selectedYearEnd = yearView.value;
-              console.log(
-                "start " +
-                  selectedNepdayStart +
-                  " " +
-                  selectedMonthStart +
-                  " " +
-                  selectedYearStart +
-                  "\nend " +
-                  selectedNepdayEnd +
-                  " " +
-                  selectedMonthEnd +
-                  " " +
-                  selectedYearEnd
-              );
+              // console.log(
+              //   "start " +
+              //     selectedNepdayStart +
+              //     " " +
+              //     selectedMonthStart +
+              //     " " +
+              //     selectedYearStart +
+              //     "\nend " +
+              //     selectedNepdayEnd +
+              //     " " +
+              //     selectedMonthEnd +
+              //     " " +
+              //     selectedYearEnd
+              // );
             }
             updateCalendar(topBar, calendarGrid);
           });
@@ -1469,7 +1645,7 @@ function buildEnglishCalendars(options = {}) {
 
     monthView.addEventListener("change", (event) => {
       viewMonth = parseInt(event.target.value);
-      console.log(viewMonth);
+      // console.log(viewMonth);
       updateCalendar(topBar, calendarGrid);
     });
 
