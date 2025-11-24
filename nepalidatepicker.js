@@ -403,6 +403,38 @@ function buildNepaliCalendars(options = {}) {
         return;
       }
       const enteredDate = container.correspondingInput.value.split("-");
+      if (enteredDate.length !== 3) {
+        container.correspondingInput.value = "";
+                invalidDateFunctionInternal({
+              dateString: `${selectedYear}-${String(selectedMonth + 1).padStart(
+                2,
+                "0"
+              )}-${String(selectedNepday).padStart(2, "0")}`,
+              nepaliYear: selectedYear,
+              nepaliMonth: selectedMonth + 1,
+              nepaliDay: selectedNepday,
+              itemId: container.correspondingInput.id,
+            });
+        return;
+      }
+      if (enteredDate.includes(""))
+
+{
+        container.correspondingInput.value = "";
+                invalidDateFunctionInternal({
+              dateString: `${selectedYear}-${String(selectedMonth + 1).padStart(
+                2,
+                "0"
+              )}-${String(selectedNepday).padStart(2, "0")}`,
+              nepaliYear: selectedYear,
+              nepaliMonth: selectedMonth + 1,
+              nepaliDay: selectedNepday,
+              itemId: container.correspondingInput.id,
+            });
+        return;
+      }
+
+
       const year = parseInt(enteredDate[0]);
       if (year < minNepYear || year > maxNepYear) {
         container.correspondingInput.value = "";
@@ -1117,6 +1149,20 @@ function buildEnglishCalendars(options = {}) {
       if (enteredDate.length !== 3) {
         container.correspondingInput.value = "";
         invalidDateFunctionInternal({
+              dateString: `${selectedYear}-${String(selectedMonth + 1).padStart(
+                2,
+                "0"
+              )}-${String(selectedNepday).padStart(2, "0")}`,
+              nepaliYear: selectedYear,
+              nepaliMonth: selectedMonth + 1,
+              nepaliDay: selectedNepday,
+              itemId: container.correspondingInput.id,
+            });
+        return;
+      }
+      if (enteredDate.includes("")){
+        container.correspondingInput.value = "";
+                invalidDateFunctionInternal({
               dateString: `${selectedYear}-${String(selectedMonth + 1).padStart(
                 2,
                 "0"
