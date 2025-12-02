@@ -341,16 +341,46 @@ function buildNepaliCalendars(options = {}) {
 
   const containers = [];
 
-  inputs.forEach((inp) => {
+inputs.forEach((inp) => {
     const containerDiv = document.createElement("div");
     containerDiv.correspondingInput = inp;
+    
     inp.addEventListener("click", () => {
+      containerDiv.style.opacity = "0"; 
       containerDiv.style.display = "block";
+
       const rect = inp.getBoundingClientRect();
-      containerDiv.style.left = rect.left + window.scrollX + "px";
-      containerDiv.style.top = rect.bottom + window.scrollY + "px";
-      containerDiv.style.display = "block";
+      const containerWidth = containerDiv.offsetWidth;
+      const containerHeight = containerDiv.offsetHeight;
+      
+      const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+      const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+
+      let top = rect.bottom + window.scrollY;
+      let left = rect.left + window.scrollX;
+
+
+      if (rect.bottom + containerHeight > viewportHeight) {
+          if (rect.top - containerHeight > 0) {
+              top = rect.top + window.scrollY - containerHeight;
+          } else {
+              top = (window.scrollY + viewportHeight) - containerHeight - 5;
+          }
+      }
+
+      if (rect.left + containerWidth > viewportWidth) {
+          left = (window.scrollX + viewportWidth) - containerWidth - 10;
+      }
+      
+      if (left < window.scrollX) {
+          left = window.scrollX + 5;
+      }
+
+      containerDiv.style.left = left + "px";
+      containerDiv.style.top = top + "px";
+      containerDiv.style.opacity = "1"; 
     });
+
     containerDiv.classList.add("nepali-date-picker-container");
     document.body.appendChild(containerDiv);
     containers.push(containerDiv);
@@ -1088,16 +1118,45 @@ function buildEnglishCalendars(options = {}) {
 
   const containers = [];
 
-  inputs.forEach((inp) => {
+inputs.forEach((inp) => {
     const containerDiv = document.createElement("div");
     containerDiv.correspondingInput = inp;
+
     inp.addEventListener("click", () => {
+      containerDiv.style.opacity = "0"; 
       containerDiv.style.display = "block";
+
       const rect = inp.getBoundingClientRect();
-      containerDiv.style.left = rect.left + window.scrollX + "px";
-      containerDiv.style.top = rect.bottom + window.scrollY + "px";
-      containerDiv.style.display = "block";
+      const containerWidth = containerDiv.offsetWidth;
+      const containerHeight = containerDiv.offsetHeight;
+      
+      const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+      const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+
+      let top = rect.bottom + window.scrollY;
+      let left = rect.left + window.scrollX;
+
+      if (rect.bottom + containerHeight > viewportHeight) {
+          if (rect.top - containerHeight > 0) {
+              top = rect.top + window.scrollY - containerHeight;
+          } else {
+              top = (window.scrollY + viewportHeight) - containerHeight - 5;
+          }
+      }
+
+      if (rect.left + containerWidth > viewportWidth) {
+          left = (window.scrollX + viewportWidth) - containerWidth - 10;
+      }
+      
+      if (left < window.scrollX) {
+          left = window.scrollX + 5;
+      }
+
+      containerDiv.style.left = left + "px";
+      containerDiv.style.top = top + "px";
+      containerDiv.style.opacity = "1";
     });
+    
     containerDiv.classList.add("nepali-date-picker-container");
     document.body.appendChild(containerDiv);
     containers.push(containerDiv);
