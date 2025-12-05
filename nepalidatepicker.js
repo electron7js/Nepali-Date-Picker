@@ -481,7 +481,7 @@ inputs.forEach((inp) => {
         return;
       }
       const month = parseInt(enteredDate[1]);
-      if (month < 0 || month > 11) {
+      if (month < 0 || month > 12) {
         container.correspondingInput.value = "";
         invalidDateFunctionInternal({
               dateString: `${selectedYear}-${String(selectedMonth + 1).padStart(
@@ -1296,7 +1296,7 @@ inputs.forEach((inp) => {
         return;
       }
       const month = parseInt(enteredDate[1]);
-      if (month < 0 || month > 11) {
+      if (month < 0 || month > 12) {
         container.correspondingInput.value = "";
         invalidDateFunctionInternal({
               dateString: `${selectedYear}-${String(selectedMonth + 1).padStart(
