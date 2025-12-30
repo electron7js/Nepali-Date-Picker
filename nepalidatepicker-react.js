@@ -407,9 +407,9 @@ inputs.forEach((inp) => {
     var selectedNepday = curNepday;
 
     if (selectedDate) {
-      (selectedYear = parseInt(selectedDate.split("-")[0])),
-        (selectedMonth = parseInt(selectedDate.split("-")[1]) - 1),
-        (selectedNepday = parseInt(selectedDate.split("-")[2]));
+      selectedYear = parseInt(selectedDate.split("-")[0]),
+      selectedMonth = parseInt(selectedDate.split("-")[1]) - 1,
+      selectedNepday = parseInt(selectedDate.split("-")[2]);
     }
 
         const invalidDateFunctionInternal = (data)=>{
@@ -1179,9 +1179,9 @@ inputs.forEach((inp) => {
     var selectedNepday = englishDayIndex;
 
     if (selectedDate) {
-      (selectedYear = parseInt(selectedDate.split("-")[0])),
-        (selectedMonth = parseInt(selectedDate.split("-")[1]) - 1),
-        (selectedNepday = parseInt(selectedDate.split("-")[2]));
+      selectedYear = parseInt(selectedDate.split("-")[0]),
+      selectedMonth = parseInt(selectedDate.split("-")[1]) - 1,
+      selectedNepday = parseInt(selectedDate.split("-")[2]);
     }
 
      const invalidDateFunctionInternal = (data)=>{
